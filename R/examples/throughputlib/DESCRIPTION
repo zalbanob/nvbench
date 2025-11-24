@@ -1,0 +1,11 @@
+Package: nvbenchr.throughput
+Type: Package
+Title: CUDA Throughput helper for nvbenchr examples
+Version: 0.0.1
+Authors@R: c(person(given = "Ziyad", family = "AlBanoby", email = "zalbanoby@bsc.es", role = c("aut","ctb","cre")))
+Description: Companion package containing CUDA kernels used by nvbenchr R examples.
+License: Apache License (>= 2.0) with LLVM exception
+Encoding: UTF-8
+SystemRequirements: CUDA toolkit
+LinkingTo: Rcpp
+Imports: Rcpp

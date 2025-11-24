@@ -1,0 +1,3 @@
+useDynLib(nvbenchr.throughput, .registration = TRUE)
+importFrom(Rcpp, evalCpp)
+export(nvbenchr_example_throughput)

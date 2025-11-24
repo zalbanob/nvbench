@@ -1,0 +1,3 @@
+useDynLib(nvbenchr, .registration = TRUE)
+importFrom(R6, R6Class)
+export(CudaStream, Launch, Benchmark, State, register_benchmark, register, run_all_benchmarks)

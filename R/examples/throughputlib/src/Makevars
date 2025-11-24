@@ -1,0 +1,18 @@
+CXX_STD = CXX17
+
+CUDA_HOME ?= /opt/nvidia/hpc_sdk/Linux_x86_64/25.3/cuda/
+NVCC ?= $(CUDA_HOME)/bin/nvcc
+R_HOME ?= $(shell R RHOME)
+
+PKG_CPPFLAGS += -I$(CUDA_HOME)/include
+# Pull R and Rcpp include flags (fallback to R CMD config for R headers)
+PKG_CPPFLAGS += $(shell R CMD config --cppflags)
+PKG_CPPFLAGS += $(shell "${R_HOME}/bin/Rscript" -e "cat(Rcpp:::CxxFlags())")
+PKG_CPPFLAGS += -I$(R_HOME)/include -I/usr/share/R/include
+PKG_LIBS += -L$(CUDA_HOME)/lib64 -lcudart
+PKG_LIBS += $(shell "${R_HOME}/bin/Rscript" -e "cat(Rcpp:::LdFlags())")
+
+OBJECTS = RcppExports.o throughput.o
+
+%.o: %.cu
+	$(NVCC) -arch=sm_90 -std=c++17 -Xcompiler -fPIC $(PKG_CPPFLAGS) -c $< -o $@

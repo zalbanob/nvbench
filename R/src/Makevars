@@ -1,0 +1,14 @@
+CXX_STD = CXX17
+
+# Paths can be overridden when invoking R CMD INSTALL:
+# R CMD INSTALL --configure-args="NVBENCH_INCLUDE_DIR=/path/include NVBENCH_LIB_DIR=/path/lib"
+NVBENCH_INCLUDE_DIR ?= $(CURDIR)/../..
+NVBENCH_LIB_DIR ?= $(CURDIR)/../../build/lib
+CUDA_HOME ?= /opt/nvidia/hpc_sdk/Linux_x86_64/25.3/cuda/
+
+NVBENCH_LIB_DIR_ABS := $(abspath $(NVBENCH_LIB_DIR))
+
+PKG_CPPFLAGS += -I$(NVBENCH_INCLUDE_DIR)
+PKG_CPPFLAGS += -I$(CUDA_HOME)/include
+PKG_LIBS += -L$(NVBENCH_LIB_DIR_ABS) -lnvbench -Wl,-rpath,$(NVBENCH_LIB_DIR_ABS)
+PKG_LIBS += -L$(CUDA_HOME)/lib64 -lcudart
